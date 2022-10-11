@@ -1,0 +1,199 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --clock-size: 450px;
+}
+
+::selection {
+  background: transparent;
+}
+
+body {
+  background-color: white;
+  overflow: hidden;
+}
+
+.grid-1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+#background {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+}
+
+/* IMAGE LINE AND TEXT */
+
+#image-line-container {
+  display: flex;
+  height: 45%;
+  margin: auto;
+  overflow: hidden;
+}
+
+#image-line {
+  width: 100%;
+  align-self: center;
+  margin-top: -100px;
+}
+
+.klok-text-container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  width: 300px;
+  height: fit-content;
+  margin: auto 0 auto -32%;
+}
+
+.klok-text {
+  color: white;
+  font-size: 14px;
+}
+
+.klok-text-header {
+  font-weight: 100;
+  font-size: 40px;
+}
+
+.klok-text-subheader {
+  font-weight: 100;
+  font-size: 24px;
+}
+
+.clear-btn {
+  border: none;
+}
+
+.btn-panel {
+  background-color: white;
+  height: 34px;
+  width: 120px;
+  border-radius: 17px;
+  margin-top: 6px;
+}
+
+#colors-panel {
+  display: flex;
+  padding: 0 4px 0 4px;
+}
+
+.color-btn {
+  margin: auto;
+  background-color: rgb(117, 105, 105);
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+}
+
+#size-btn {
+  width: 100px;
+}
+
+#size-btn:hover {
+  filter: brightness(0.8);
+  transition: 0.5s filter;
+}
+
+#size-btn:not(hover) {
+  filter: brightness(1);
+  transition: 0.5s filter;
+}
+
+/* CLOCK */
+
+#cube {
+  display: grid;
+  margin: auto;
+  transform-style: preserve-3d;
+  transform: perspective(1600px) rotateY(15deg) rotateX(20deg);
+}
+
+.tile {
+  width: calc(var(--clock-size) / 8);
+  height: var(--clock-size);
+  margin: auto;
+  background-image: url("src/Wood_Texture.png");
+  background-size: 100%;
+}
+
+.side {
+  filter: brightness(0.5);
+}
+
+.front {
+  display: grid;
+  width: var(--clock-size);
+}
+
+.top {
+  transform: rotateX(90deg) rotateZ(90deg)
+    translateZ(calc(var(--clock-size) / 2))
+    translateX(calc(var(--clock-size) / -16));
+}
+.right {
+  transform: rotateY(90deg) translateZ(calc(var(--clock-size) / 2))
+    translateX(calc(var(--clock-size) / 16));
+}
+.left {
+  transform: rotateY(-90deg) translateZ(calc(var(--clock-size) / 2))
+    translateX(calc(var(--clock-size) / -16));
+}
+
+.bottom {
+  transform: rotateX(-90deg) rotateZ(90deg)
+    translateZ(calc(var(--clock-size) / 2))
+    translateX(calc(var(--clock-size) / 16));
+}
+
+/* Align clock and dots position using grid */
+#clock-grid,
+#dotsContainer {
+  height: inherit;
+  width: inherit;
+  display: grid;
+}
+
+#clock-grid {
+  grid-template-columns: repeat(11, auto);
+  padding: calc(var(--clock-size) / 10);
+}
+
+#dotsContainer {
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-content: space-between;
+  padding: calc(var(--clock-size) / 20);
+}
+
+.dot {
+  width: calc(var(--clock-size) / 60);
+  height: calc(var(--clock-size) / 60);
+  border-radius: 100%;
+  background-color: rgb(97, 70, 39);
+  box-shadow: -1px -1px 1px rgb(49, 48, 47), 2px 2px 2px rgb(255, 255, 255, 0.3);
+}
+
+.dot-active {
+  background-color: white;
+  box-shadow: 0 0 30px white, 0 0 20px white, 0 0 10px white, 0 0 2px white;
+}
+
+.letter {
+  margin: auto;
+  color: rgb(128, 82, 39);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: calc(var(--clock-size) / 17);
+  font-weight: 500;
+  text-shadow: -1px -1px 1px rgb(49, 48, 47),
+    1px 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.letter-active {
+  color: white;
+  text-shadow: 0 0 10px white, 0 0 2px white;
+}
