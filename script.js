@@ -1,4 +1,4 @@
-// DOM Elements
+/////////////////// ELEMENTS ///////////////////
 const clock = document.querySelector("#clock-grid");
 const dots = document.querySelectorAll(".dot");
 const cube = document.querySelector("#cube");
@@ -6,59 +6,7 @@ const clockSides = document.querySelectorAll(".clock-tile");
 const clockColorBtns = document.querySelectorAll(".color-btn");
 const sizeBtn = document.querySelector("#size-btn");
 
-// Changing clock texture (color)
-const changeClockTexture = function (n) {
-  clockSides.forEach(function (side) {
-    side.style.backgroundImage = `url('src/Color${n}_Texture.jpg')`;
-  });
-};
-
-clockColorBtns.forEach(function (button, i) {
-  button.addEventListener("click", function () {
-    changeClockTexture(i + 1);
-  });
-});
-
-// CHANGE THIS TO A CSS TRANSMISSION INSTEAD OF USING AN INTERVAL
-// Changing clock size
-let clockSize = 400;
-let maxSize = 400;
-let clockInterval = 0;
-
-sizeBtn.addEventListener("click", function () {
-  if (clockSize === 300) {
-    maxSize = 400;
-    sizeBtn.textContent = "Medium";
-    clockInterval = setInterval(changeClockSize, 2);
-  } else if (clockSize === 400) {
-    maxSize = 500;
-    sizeBtn.textContent = "Large";
-    clockInterval = setInterval(changeClockSize, 2);
-  } else if (clockSize === 500) {
-    maxSize = 300;
-    sizeBtn.textContent = "Small";
-    clockInterval = setInterval(changeClockSize, 1);
-  }
-});
-
-const changeClockSize = function () {
-  if (clockSize === maxSize) {
-    clearInterval(clockInterval);
-    return;
-  }
-
-  if (clockSize < maxSize) {
-    clockSize += 2;
-  } else {
-    clockSize -= 3;
-  }
-
-  console.log("hi");
-
-  document.documentElement.style.setProperty("--clock-size", `${clockSize}px`);
-};
-
-// Converting text to array for CSS Grid
+/////////////////// WORD GRID SETUP ///////////////////
 const [...letters] =
   "hetkisavijftienatzvoorovermekwarthalfspmovervoorthgeenstweeamcdrieviervijfzeszevenonegenachttienelftwaalfpmuur".toUpperCase();
 
@@ -83,7 +31,7 @@ const toggleLetters = function (arr) {
   });
 };
 
-// Switch case using minutes of actual time
+/////////////////// DOTS LOGIC ///////////////////
 const updateDots = function (minute) {
   // Slice last digit and convert back to number
   let lastDigit = String(minute).slice(-1);
@@ -128,6 +76,7 @@ const disableAll = function () {
   });
 };
 
+/////////////////// LETTER MAPPING ///////////////////
 // Mapping toggle functions for words matched to array index
 const toggleHetIs = () => toggleLetters([0, 1, 2, 4, 5]);
 const toggleMins5 = () => toggleLetters([7, 8, 9, 10]);
@@ -154,21 +103,21 @@ const toggleHour11 = () => toggleLetters([96, 97, 98]);
 const toggleHour12 = () => toggleLetters([99, 100, 101, 102, 103, 104]);
 const toggleHour = () => toggleLetters([107, 108, 109]);
 
-// MAIN CLOCK UPDATE FUNCTION
+/////////////////// MAIN TIME UPDATE FUNCTION ///////////////////
 const updateTime = function () {
-  const date = new Date(); // Get actual time
+  // Get actual time
+  const date = new Date();
   let hour = date.getHours();
   let min = date.getMinutes();
 
-  // Hard coded time for test purposes
-  // hour = 10;
-  // min = 23;
+  // first disable all letters, then toggle on correct ones
+  disableAll();
+  //'Het is' is always on
+  toggleHetIs();
+  // update dots
+  updateDots(min);
 
-  disableAll(); // Disable all letters and toggle on the correct ones
-  toggleHetIs(); //'Het is' is always on
-  updateDots(min); // Update dots
-
-  // Full summary for minutes
+  // Full summary for minutes for overview
   // 0-4: uur
   // 5-9: 5 over
   // 10-14: 10 over
@@ -182,17 +131,15 @@ const updateTime = function () {
   // 50-54: 10 voor
   // 55-59: 5 voor
 
-  // Over1 is toggled on 5-14 35-44 for vijf, tien and kwartier
+  // Over is toggled on during minutes 5-14 35-44
   if ((min >= 5 && min <= 14) || (min >= 35 && min <= 44)) {
     toggleOver();
   }
-
-  // Voor1 is toggled on 20-29 50-59 for vijf, tien and kwartier
+  // Voor is toggled on during minutes 20-29 50-59
   if ((min >= 20 && min <= 29) || (min >= 50 && min <= 59)) {
     toggleVoor();
   }
-
-  // Half is toggled on between 20-44
+  // Half is toggled on between minutes 20-44
   if (min >= 20 && min <= 44) {
     toggleHalf();
   }
@@ -239,10 +186,7 @@ const updateTime = function () {
   }
 
   // Hours don't run at exact hours meaning 9 is enabled between 8:20-9:19
-  // Hours * 60 + mins = full minutes
   // If fullMins value is between set value enable hour
-
-  // Full day = 1440 mins
   const fullMins = hour * 60 + min;
 
   // 1: 20 - 79 && 740 - 799
@@ -325,3 +269,42 @@ const updateTime = function () {
 // Run updated time at start then every x miliseconds
 updateTime();
 setInterval(updateTime, 1000);
+
+// CHANGE CLOCK TEXTURE
+const changeClockTexture = function (n) {
+  clockSides.forEach(function (side) {
+    side.style.backgroundImage = `url('src/Color${n}_Texture.jpg')`;
+  });
+};
+
+clockColorBtns.forEach(function (button, i) {
+  button.addEventListener("click", function () {
+    changeClockTexture(i + 1);
+  });
+});
+
+/////////////////// CHANGE CLOCK SIZE ///////////////////
+sizeBtn.addEventListener("click", function () {
+  // get current scale of cube
+  const cubeScale = Number(
+    getComputedStyle(document.querySelector("#cube"), null).getPropertyValue(
+      "scale"
+    )
+  );
+
+  switch (cubeScale) {
+    case 0.8:
+      cube.style.scale = 0.9;
+      sizeBtn.textContent = "Medium";
+      break;
+    case 0.9:
+      cube.style.scale = 1;
+      sizeBtn.textContent = "Large";
+      break;
+    case 1:
+      cube.style.scale = 0.8;
+      sizeBtn.textContent = "Small";
+    default:
+      break;
+  }
+});

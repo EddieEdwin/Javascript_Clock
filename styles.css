@@ -9,7 +9,7 @@
 }
 
 :root {
-  --clock-size: 450px;
+  --clock-size: 500px;
 }
 
 ::selection {
@@ -131,6 +131,8 @@
   animation: clockRotationAnim 9s ease-in-out infinite;
   display: grid;
   transform-style: preserve-3d;
+  scale: 0.9;
+  transition: scale 0.5s;
 }
 
 .clock-tile {
