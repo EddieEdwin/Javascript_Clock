@@ -2,6 +2,61 @@
 const clock = document.querySelector("#clock-grid");
 const dots = document.querySelectorAll(".dot");
 const cube = document.querySelector("#cube");
+const clockSides = document.querySelectorAll(".clock-tile");
+const clockColorBtns = document.querySelectorAll(".color-btn");
+const sizeBtn = document.querySelector("#size-btn");
+
+// Changing clock texture (color)
+const changeClockTexture = function (n) {
+  clockSides.forEach(function (side) {
+    side.style.backgroundImage = `url('src/Color${n}_Texture.jpg')`;
+  });
+};
+
+clockColorBtns.forEach(function (button, i) {
+  button.addEventListener("click", function () {
+    changeClockTexture(i + 1);
+  });
+});
+
+// CHANGE THIS TO A CSS TRANSMISSION INSTEAD OF USING AN INTERVAL
+// Changing clock size
+let clockSize = 400;
+let maxSize = 400;
+let clockInterval = 0;
+
+sizeBtn.addEventListener("click", function () {
+  if (clockSize === 300) {
+    maxSize = 400;
+    sizeBtn.textContent = "Medium";
+    clockInterval = setInterval(changeClockSize, 2);
+  } else if (clockSize === 400) {
+    maxSize = 500;
+    sizeBtn.textContent = "Large";
+    clockInterval = setInterval(changeClockSize, 2);
+  } else if (clockSize === 500) {
+    maxSize = 300;
+    sizeBtn.textContent = "Small";
+    clockInterval = setInterval(changeClockSize, 1);
+  }
+});
+
+const changeClockSize = function () {
+  if (clockSize === maxSize) {
+    clearInterval(clockInterval);
+    return;
+  }
+
+  if (clockSize < maxSize) {
+    clockSize += 2;
+  } else {
+    clockSize -= 3;
+  }
+
+  console.log("hi");
+
+  document.documentElement.style.setProperty("--clock-size", `${clockSize}px`);
+};
 
 // Converting text to array for CSS Grid
 const [...letters] =
@@ -270,14 +325,3 @@ const updateTime = function () {
 // Run updated time at start then every x miliseconds
 updateTime();
 setInterval(updateTime, 1000);
-
-document.addEventListener("mousemove", function (e) {
-  // screen width 1920
-  // x -1920 to 0 and 1920 to 0 for main screen
-  // y 0 - 1080 (less for just the viewport)
-  const eX = Math.abs(e.screenX);
-  const posX = eX / -25 + 40;
-  const posY = e.screenY / -15 + 40;
-
-  cube.style.transform = `perspective(1600px) rotateY(${posX}deg) rotateX(${posY}deg)`;
-});

@@ -1,59 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Clockwork</title>
+    <title>Time in Words - Edwin Hakemulder</title>
+    <link href="Styles.css" rel="stylesheet" type="text/css" />
   </head>
-  <body>
-    <div id="background">
-      <div id="cube" class="grid-1">
-        <div class="front tile grid-1">
-          <div id="clock-grid" class="grid-1"></div>
-          <div id="dotsContainer" class="grid-1">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+
+  <body style="overflow: hidden">
+    <div id="clock-container">
+      <div id="clock-rotation" class="grid-1">
+        <div id="cube" class="grid-1">
+          <div class="front clock-tile grid-1">
+            <div id="clock-grid" class="grid-1"></div>
+            <div id="dotsContainer" class="grid-1">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
           </div>
+          <div class="left clock-tile side grid-1"></div>
+          <div class="right clock-tile side grid-1"></div>
+          <div class="top clock-tile side grid-1"></div>
+          <div class="bottom clock-tile side grid-1"></div>
+          <div class="back clock-tile grid-1"></div>
         </div>
-        <div class="left tile side grid-1"></div>
-        <div class="right tile side grid-1"></div>
-        <div class="top tile side grid-1"></div>
-        <div class="bottom tile side grid-1"></div>
       </div>
       <div id="image-line-container" class="grid-1">
-        <img id="image-line" src="src/Livingroom_Blurred.png" />
-        <div class="klok-text-container">
-          <h1 class="klok-text klok-text-header">Wandklok</h1>
+        <div class="clock-text-container">
+          <h1 class="clock-text clock-text-header">Coding Challenge</h1>
           <br />
-          <p class="klok-text">
-            Deze klok geeft de tijd aan in woorden in plaats van in cijfers. De
-            minuten worden aangegeven als verlichte stippen in de hoeken.
+          <p class="clock-text">
+            A clock that shows the time in words (in Dutch). Extra minutes are
+            displayed using lit dots in the corners. I created this digital
+            version as a coding challenge for myself in HTML, CSS, and
+            JavaScript.
           </p>
+
           <br />
-          <p class="klok-text">
-            Als coding challenge voor mezelf heb ik deze klok uitgewerkt in
-            HTML, CSS, en JavaScript.
-          </p>
-          <br />
-          <h2 class="klok-text klok-text-subheader">Kleur</h2>
+          <h2 class="clock-text clock-text-subheader">Color</h2>
           <div id="colors-panel" class="btn-panel">
-            <button class="clear-btn color-btn"></button>
-            <button class="clear-btn color-btn"></button>
-            <button class="clear-btn color-btn"></button>
-            <button class="clear-btn color-btn"></button>
+            <button
+              id="clock-color1"
+              class="clear-btn color-btn"
+              style="background-image: url(src/Color1.png)"
+            ></button>
+            <button
+              id="clock-color2"
+              class="clear-btn color-btn"
+              style="background-image: url(src/Color2.png)"
+            ></button>
+            <button
+              id="clock-color3"
+              class="clear-btn color-btn"
+              style="background-image: url(src/Color3.png)"
+            ></button>
+            <button
+              id="clock-color4"
+              class="clear-btn color-btn"
+              style="background-image: url(src/Color4.png)"
+            ></button>
           </div>
           <br />
-          <h2 class="klok-text klok-text-subheader">Maat</h2>
-          <button id="size-btn" class="clear-btn btn-panel size-btn-text">
-            Middel
+          <h2 class="clock-text clock-text-subheader content-desktop">Size</h2>
+          <button
+            id="size-btn"
+            class="clear-btn btn-panel size-btn-text content-desktop"
+          >
+            Medium
           </button>
         </div>
       </div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
